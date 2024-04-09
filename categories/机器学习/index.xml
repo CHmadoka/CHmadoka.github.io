@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>机器学习 on CHmadoka 小屋</title>
-        <link>https://demo.stack.jimmycai.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+        <link>https://CHmadoka.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
         <description>Recent content in 机器学习 on CHmadoka 小屋</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 09 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 09 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://CHmadoka.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ANN 神经网络基础</title>
-        <link>https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/</link>
+        <link>https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/</link>
         <pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/</guid>
-        <description>&lt;img src="https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1.png" alt="Featured image of post ANN 神经网络基础" /&gt;&lt;p&gt;由于一些原因要学习神经网络，发现几乎所有资料的内容都比较含蓄，描述不清晰，结构不完整。几天学习下来很痛苦，决定结合自己的理解写个教程。（结果并非像我一开始想的那样对初学者友好，大概严格的公式理论仍然是绕不开的吧）&lt;/p&gt;
+        <guid>https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/</guid>
+        <description>&lt;img src="https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1.png" alt="Featured image of post ANN 神经网络基础" /&gt;&lt;p&gt;由于一些原因要学习神经网络，发现几乎所有资料的内容都比较含蓄，描述不清晰，结构不完整。几天学习下来很痛苦，决定结合自己的理解写个教程。（结果并非像我一开始想的那样对初学者友好，大概严格的公式理论仍然是绕不开的吧）&lt;/p&gt;
 &lt;h2 id=&#34;生物神经元结构&#34;&gt;
     &lt;a href=&#34;#%e7%94%9f%e7%89%a9%e7%a5%9e%e7%bb%8f%e5%85%83%e7%bb%93%e6%9e%84&#34;&gt;#&lt;/a&gt;
     生物神经元结构
 &lt;/h2&gt;&lt;!-- 注意！！！markdown文件名称必须为index.md，网页才能追踪到引用的图片，并自动缩放生成不同大小的版本。否则无法正常引用图片 --&gt;
-&lt;p&gt;&lt;img src=&#34;https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1.png&#34;
 	width=&#34;581&#34;
 	height=&#34;278&#34;
-	srcset=&#34;https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1_hu69ae4b20123b44ac4941d164f555be9a_68333_480x0_resize_box_3.png 480w, https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1_hu69ae4b20123b44ac4941d164f555be9a_68333_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1_hu69ae4b20123b44ac4941d164f555be9a_68333_480x0_resize_box_3.png 480w, https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/1_hu69ae4b20123b44ac4941d164f555be9a_68333_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;生物神经元结构&#34;
@@ -34,10 +34,10 @@
 &lt;h2 id=&#34;神经元数学模型&#34;&gt;
     &lt;a href=&#34;#%e7%a5%9e%e7%bb%8f%e5%85%83%e6%95%b0%e5%ad%a6%e6%a8%a1%e5%9e%8b&#34;&gt;#&lt;/a&gt;
     神经元数学模型
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2.png&#34;
 	width=&#34;380&#34;
 	height=&#34;252&#34;
-	srcset=&#34;https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_480x0_resize_box_3.png 480w, https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_480x0_resize_box_3.png 480w, https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;神经元的数学模型&#34;
@@ -82,10 +82,10 @@ $$
 &lt;li&gt;把输入映射到特定区间或特征值，既能决定神经元输出的值域，又可以把输入映射到特征空间（特征值）。&lt;/li&gt;
 &lt;li&gt;如果激活函数是非线性函数，可以极大地增强神经元的表达能力，建立从输入到输出的非线性映射。（一个非线性函数可以是任意个数的非线性函数与线性函数的叠加，因此具有极强的抽象表达能力）&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2.png&#34;
 	width=&#34;380&#34;
 	height=&#34;252&#34;
-	srcset=&#34;https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_480x0_resize_box_3.png 480w, https://demo.stack.jimmycai.com/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_480x0_resize_box_3.png 480w, https://CHmadoka.github.io/p/ann-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/2_hu619792b0066f162294981d6fc1d25bbf_31762_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;神经元的数学模型&#34;
@@ -189,18 +189,18 @@ $$
         </item>
         <item>
         <title>BP神经网络与反向传播算法</title>
-        <link>https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/</link>
+        <link>https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/</link>
         <pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/</guid>
-        <description>&lt;img src="https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1.png" alt="Featured image of post BP神经网络与反向传播算法" /&gt;&lt;p&gt;BP神经网络（Backpropagation Neural network），具有多层神经元，并且神经元的信号（输入输出）总是向前（由输入层指向输出层）传播，所以是多层向前网络。&lt;/p&gt;
+        <guid>https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/</guid>
+        <description>&lt;img src="https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1.png" alt="Featured image of post BP神经网络与反向传播算法" /&gt;&lt;p&gt;BP神经网络（Backpropagation Neural network），具有多层神经元，并且神经元的信号（输入输出）总是向前（由输入层指向输出层）传播，所以是多层向前网络。&lt;/p&gt;
 &lt;h2 id=&#34;bp神经网络的结构&#34;&gt;
     &lt;a href=&#34;#bp%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%9a%84%e7%bb%93%e6%9e%84&#34;&gt;#&lt;/a&gt;
     BP神经网络的结构
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1.png&#34;
 	width=&#34;403&#34;
 	height=&#34;242&#34;
-	srcset=&#34;https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1_hud271e26b886e24e34b864ebb2b9cf980_50512_480x0_resize_box_3.png 480w, https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1_hud271e26b886e24e34b864ebb2b9cf980_50512_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1_hud271e26b886e24e34b864ebb2b9cf980_50512_480x0_resize_box_3.png 480w, https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/1_hud271e26b886e24e34b864ebb2b9cf980_50512_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;BP神经网络的结构&#34;
@@ -245,10 +245,10 @@ $$
 &lt;h2 id=&#34;bp神经网络的运作过程&#34;&gt;
     &lt;a href=&#34;#bp%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%9a%84%e8%bf%90%e4%bd%9c%e8%bf%87%e7%a8%8b&#34;&gt;#&lt;/a&gt;
     BP神经网络的运作过程
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/2.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/2.png&#34;
 	width=&#34;571&#34;
 	height=&#34;915&#34;
-	srcset=&#34;https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/2_hucccb64f74af914f05be822133a399aeb_26870_480x0_resize_box_3.png 480w, https://demo.stack.jimmycai.com/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/2_hucccb64f74af914f05be822133a399aeb_26870_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/2_hucccb64f74af914f05be822133a399aeb_26870_480x0_resize_box_3.png 480w, https://CHmadoka.github.io/p/bp%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/2_hucccb64f74af914f05be822133a399aeb_26870_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
