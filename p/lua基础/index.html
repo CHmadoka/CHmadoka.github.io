@@ -440,18 +440,26 @@
     条件语句
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- Lua中，不等号为 ~=</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="n">x</span><span class="o">~=</span><span class="mi">10</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="kr">then</span>
 </span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;x is greater than 5&#34;</span><span class="p">)</span>
@@ -769,7 +777,8 @@
 </div><h3 id="元表与元方法">
     <a href="#%e5%85%83%e8%a1%a8%e4%b8%8e%e5%85%83%e6%96%b9%e6%b3%95">#</a>
     元表与元方法
-</h3><p>元表允许改变表的行为，每个表都可以有一个元表，用于定义一些特定的操作，如算术运算、索引、调用等。</p>
+</h3><p>拥有元方法的表称为元表，原方法是一些拥有特定名称的函数。</p>
+<p>元表允许改变表的行为，每个表都可以有一个元表，元表的元方法用于定义表的一些特定操作，如算术运算、索引、调用等。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -795,13 +804,17 @@
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 定义一个表</span>
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 定义一个表</span>
 </span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">t</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- 定义一个元表</span>
 </span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">mt</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- __add是特定的元方法，用于定义两个表相加时，执行的操作。</span>
 </span></span><span class="line"><span class="cl">    <span class="n">__add</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="kr">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">t2</span> <span class="kr">do</span>
 </span></span><span class="line"><span class="cl">            <span class="n">table.insert</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -810,7 +823,7 @@
 </span></span><span class="line"><span class="cl">    <span class="kr">end</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">-- 设置元表</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- setmetatable函数，给表绑定元表</span>
 </span></span><span class="line"><span class="cl"><span class="n">setmetatable</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">mt</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">-- 使用元方法</span>
@@ -820,6 +833,47 @@
 </span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span> <span class="kr">in</span> <span class="n">ipairs</span><span class="p">(</span><span class="n">t3</span><span class="p">)</span> <span class="kr">do</span>
 </span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1">-- 输出: 1 2 3 4 5 6</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>元方法及其作用如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">__index</span><span class="p">:</span><span class="err">定义访问表中不存在的键时的行为。定义类时，通常使其等于类名（表名），否则无法通过对象名称访问成员方法。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__newindex</span><span class="p">:</span><span class="err">定义给表中不存在的键赋值时的行为。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__call</span><span class="p">:</span><span class="err">定义表作为函数调用时的行为。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">__tostring</span><span class="p">:</span><span class="err">定义表转换成字符串时的值。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__len</span><span class="p">:</span><span class="err">定义对表使用操作符“</span><span class="o">#</span><span class="err">”时的行为。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 算术运算</span>
+</span></span><span class="line"><span class="cl"><span class="n">__add</span><span class="p">:</span><span class="err">表相加</span>
+</span></span><span class="line"><span class="cl"><span class="n">__sub</span><span class="p">:</span><span class="err">表相减</span>
+</span></span><span class="line"><span class="cl"><span class="n">__mul</span><span class="p">:</span><span class="err">表相乘</span>
+</span></span><span class="line"><span class="cl"><span class="n">__div</span><span class="p">:</span><span class="err">表相除</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 逻辑判断(没有判断大于和大于等于的元方法)</span>
+</span></span><span class="line"><span class="cl"><span class="n">__eq</span><span class="p">:</span><span class="o">==</span>
+</span></span><span class="line"><span class="cl"><span class="n">__lt</span><span class="p">:</span><span class="o">&lt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">__le</span><span class="p">:</span><span class="o">&lt;=</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="面向对象编程">
@@ -845,18 +899,26 @@
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 定义一个类</span>
 </span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">Animal</span> <span class="o">=</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl"><span class="n">Animal.__index</span> <span class="o">=</span> <span class="n">Animal</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 构造函数一般命名为new</span>
 </span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">Animal</span><span class="p">:</span><span class="nf">new</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 一般先用setmetatable函数，给一个空表绑定元表，然后返回该空表，</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 并在其基础上设置表元素。</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">setmetatable</span><span class="p">({},</span> <span class="n">Animal</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">instance.name</span> <span class="o">=</span> <span class="n">name</span>
 </span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">instance</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 类的成员方法</span>
 </span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">Animal</span><span class="p">:</span><span class="nf">speak</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;My name is &#34;</span> <span class="o">..</span> <span class="n">self.name</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
@@ -866,7 +928,9 @@
 </span></span><span class="line"><span class="cl"><span class="n">dog</span><span class="p">:</span><span class="n">speak</span><span class="p">()</span>  <span class="c1">-- 输出: My name is Buddy</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="字符串操作">
+</div><p>值得注意的是，new方法返回的对象仅仅是包含表中变量的一个新表，而类的成员方法定义在元表中，所以无法直接通过该对象访问元表中定义的成员方法。</p>
+<p>但由于对象与元表绑定，并且元表中定义了元方法 __index 为元表的名称，所以当通过该对象访问未定义的函数时，就会触发元方法，把调用对象替换成元表，从而实现通过对象调用类的成员方法。</p>
+<h2 id="字符串操作">
     <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e6%93%8d%e4%bd%9c">#</a>
     字符串操作
 </h2><div class="highlight"><div class="chroma">
@@ -957,6 +1021,13 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- ISToolTipInv.render是来自其他文件的表函数</span>
@@ -968,6 +1039,13 @@
 </span></span><span class="line"><span class="cl">        <span class="n">original_render</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="kr">end</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">-- ... some custom code ...</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">ISToolTipInv</span><span class="p">:</span><span class="nf">render</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 先执行原函数，再执行新的步骤</span>
+</span></span><span class="line"><span class="cl">    <span class="n">original_render</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 新的代码：</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span></code></pre></td></tr></table>
 </div>
