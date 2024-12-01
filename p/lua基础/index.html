@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="轻量级脚本语言">
+<title>Lua基础</title>
+
+<link rel='canonical' href='https://CHmadoka.github.io/p/lua%E5%9F%BA%E7%A1%80/'>
+
+<link rel="stylesheet" href="/scss/style.min.8e60baf4cd3fc55968717a6e39762f4d28ed7ef6007566b6c7970ad0fe907198.css"><meta property='og:title' content="Lua基础">
+<meta property='og:description' content="轻量级脚本语言">
+<meta property='og:url' content='https://CHmadoka.github.io/p/lua%E5%9F%BA%E7%A1%80/'>
+<meta property='og:site_name' content='CHmadoka 小屋'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='脚本' /><meta property='article:tag' content='性能优化' /><meta property='article:published_time' content='2024-05-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-24T00:00:00&#43;00:00'/><meta property='og:image' content='https://CHmadoka.github.io/p/lua%E5%9F%BA%E7%A1%80/logo.png' />
+<meta name="twitter:title" content="Lua基础">
+<meta name="twitter:description" content="轻量级脚本语言"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://CHmadoka.github.io/p/lua%E5%9F%BA%E7%A1%80/logo.png' />
+    <link rel="shortcut icon" href="/titleImg.png" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/file_259987_hu712dd812b62879d39640ef77b16ac818_50548_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😽</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CHmadoka 小屋</a></h1>
+            <h2 class="site-description">呆头呆脑的大聪明。在此分享一些比较个人化的内容。</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CHmadoka'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>垃圾堆</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#变量与数据类型">变量与数据类型</a>
+      <ol>
+        <li><a href="#声明变量">声明变量</a></li>
+        <li><a href="#数据类型">数据类型</a></li>
+      </ol>
+    </li>
+    <li><a href="#控制结构">控制结构</a>
+      <ol>
+        <li><a href="#条件语句">条件语句</a></li>
+        <li><a href="#循环">循环</a></li>
+      </ol>
+    </li>
+    <li><a href="#函数">函数</a>
+      <ol>
+        <li><a href="#函数作用域">函数作用域</a></li>
+      </ol>
+    </li>
+    <li><a href="#表tables">表（Tables）</a>
+      <ol>
+        <li><a href="#表函数的定义">表函数的定义</a></li>
+        <li><a href="#元表与元方法">元表与元方法</a></li>
+      </ol>
+    </li>
+    <li><a href="#面向对象编程">面向对象编程</a></li>
+    <li><a href="#字符串操作">字符串操作</a></li>
+    <li><a href="#require函数">require函数</a></li>
+    <li><a href="#模块">模块</a></li>
+    <li><a href="#函数的覆盖与保留">函数的覆盖与保留</a></li>
+    <li><a href="#作用域-全局与局部">作用域 全局与局部</a>
+      <ol>
+        <li><a href="#特殊规则">特殊规则</a></li>
+        <li><a href="#跨文件访问全局变量">跨文件访问全局变量</a></li>
+        <li><a href="#跨文件访问局部变量">跨文件访问局部变量</a></li>
+      </ol>
+    </li>
+    <li><a href="#性能优化">性能优化</a>
+      <ol>
+        <li><a href="#作用域">作用域</a></li>
+        <li><a href="#复合条件的顺序">复合条件的顺序</a></li>
+        <li><a href="#避免重复调用">避免重复调用</a></li>
+      </ol>
+    </li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/lua%E5%9F%BA%E7%A1%80/">
+                <img src="/p/lua%E5%9F%BA%E7%A1%80/logo_hu1821a5919a2fa887ac0823b98aca8095_9893_800x0_resize_box_3.png"
+                        srcset="/p/lua%E5%9F%BA%E7%A1%80/logo_hu1821a5919a2fa887ac0823b98aca8095_9893_800x0_resize_box_3.png 800w, /p/lua%E5%9F%BA%E7%A1%80/logo_hu1821a5919a2fa887ac0823b98aca8095_9893_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Lua基础" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" >
+                编程语言
+            </a>
+        
+            <a href="/categories/lua/" >
+                Lua
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/lua%E5%9F%BA%E7%A1%80/">Lua基础</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            轻量级脚本语言
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 24, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="变量与数据类型">
+    <a href="#%e5%8f%98%e9%87%8f%e4%b8%8e%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b">#</a>
+    变量与数据类型
+</h2><h3 id="声明变量">
+    <a href="#%e5%a3%b0%e6%98%8e%e5%8f%98%e9%87%8f">#</a>
+    声明变量
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1">-- 局部变量</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="mi">20</span>        <span class="c1">-- 全局变量</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="数据类型">
+    <a href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b">#</a>
+    数据类型
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kc">nil</span><span class="p">:</span> <span class="err">表示一个空值或未定义（在脚本语言中，变量为</span><span class="n">null等同于undefined</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl"><span class="n">boolean</span><span class="p">:</span> <span class="err">包含两个值：</span><span class="kc">true</span> <span class="err">和</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="n">number</span><span class="p">:</span> <span class="err">双精度浮点数（</span><span class="n">lua中唯一的数值类型</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span><span class="p">:</span> <span class="err">字符串</span>
+</span></span><span class="line"><span class="cl"><span class="n">table</span><span class="p">:</span> <span class="err">表，</span><span class="n">Lua</span> <span class="err">唯一的数据结构</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span><span class="p">:</span> <span class="nf">函数</span>
+</span></span><span class="line"><span class="cl"><span class="n">userdata</span><span class="p">:</span> <span class="err">用户自定义类型</span>
+</span></span><span class="line"><span class="cl"><span class="n">thread</span><span class="p">:</span> <span class="err">线程</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="控制结构">
+    <a href="#%e6%8e%a7%e5%88%b6%e7%bb%93%e6%9e%84">#</a>
+    控制结构
+</h2><h3 id="条件语句">
+    <a href="#%e6%9d%a1%e4%bb%b6%e8%af%ad%e5%8f%a5">#</a>
+    条件语句
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- Lua中，不等号为 ~=</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="n">x</span><span class="o">~=</span><span class="mi">10</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;x is greater than 5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">elseif</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">5</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;x is equal to 5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">else</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;x is less than 5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="循环">
+    <a href="#%e5%be%aa%e7%8e%af">#</a>
+    循环
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- while 循环</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="kr">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- for 循环</span>
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 泛型 for 循环</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">t</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="kr">in</span> <span class="n">ipairs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- do while循环(repeat until)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="kr">repeat</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="kr">until</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">5</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 <strong>break</strong> 关键字可以跳出循环，但是Lua中并没有 continue 关键字可以直接进入下一次循环。</p>
+<h2 id="函数">
+    <a href="#%e5%87%bd%e6%95%b0">#</a>
+    函数
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 定义函数</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 调用函数</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">sum</span><span class="p">)</span>  <span class="c1">-- 输出: 7</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 匿名函数</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- lua中函数可以用变量存储，然后通过变量调用函数。</span>
+</span></span><span class="line"><span class="cl"><span class="n">function_subtract</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">function_subtract</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1">-- 输出: 5</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="函数作用域">
+    <a href="#%e5%87%bd%e6%95%b0%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
+    函数作用域
+</h3><p>注意，lua中的函数和变量，包括函数中定义的变量，默认都是全局作用域，除非使用local关键字声明！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 定义局部函数</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 函数中定义的变量，默认是全局变量！</span>
+</span></span><span class="line"><span class="cl">    <span class="n">c</span><span class="o">=</span><span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span> <span class="c1">-- 12</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="c1">-- 5</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Lua 的核心理念之一是在尽可能最小的范围（本地）内声明变量和函数。<br>
+<br>
+所以定义变量和函数，以及在函数中定义变量时，尽可能使用local关键字。</p>
+</blockquote>
+<p>如果函数中声明了一个变量，并且需要在函数外使用该变量，应该在函数定义前，现将其声明为局部变量：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 函数中定义的变量，默认是全局变量！</span>
+</span></span><span class="line"><span class="cl">    <span class="n">c</span><span class="o">=</span><span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="表tables">
+    <a href="#%e8%a1%a8tables">#</a>
+    表（Tables）
+</h2><p>表是lua中唯一的数据结构，但非常灵活，可以实现复杂多样的数据结构，如数组，字典等。</p>
+<p>表中的元素使用逗号间隔。</p>
+<p>表元素不能使用local关键字声明，表元素的作用域与表一致。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 定义表</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">person</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nilValue</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="c1">-- nil 空值或未定义</span>
+</span></span><span class="line"><span class="cl">    <span class="n">booleanValue</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">-- boolean</span>
+</span></span><span class="line"><span class="cl">    <span class="n">numberValue</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="c1">-- number 双精度浮点数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stringValue</span> <span class="o">=</span> <span class="s2">&#34;Hello, World!&#34;</span><span class="p">,</span> <span class="c1">-- string 字符串</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tableValue</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="c1">-- table 表</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">123</span><span class="err">，</span>
+</span></span><span class="line"><span class="cl">    <span class="n">functionValue</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="kr">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="kr">end</span><span class="p">,</span> <span class="c1">-- function 函数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">userDataValue</span> <span class="o">=</span> <span class="n">userdata</span><span class="p">,</span>  <span class="c1">-- userdata（用户自定义类型）</span>
+</span></span><span class="line"><span class="cl">    <span class="n">threadValue</span> <span class="o">=</span> <span class="n">coroutine.create</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span> <span class="n">print</span><span class="p">(</span><span class="s2">&#34;Coroutine&#34;</span><span class="p">)</span> <span class="kr">end</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 表中可以同时包含数组元素和键值对</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;element&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mf">123.89</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;two&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意，为了兼容字典和数组类型，表把数组元素的索引作为其键。</p>
+<p>因此表可以分为两个部分，即数组部分和哈希部分。</p>
+<p>表中的数组部分是顺序序列，可以通过索引访问。lua中，索引从1开始计数！！！表中的数组元素默认按照先后顺序排列。
+可以通过 “[整数]=value” 的键值对形式，显式地指定数组元素的索引。</p>
+<p>如：[5]=&ldquo;five&rdquo;，指定表的数组部分第5个元素为字符串“five”。</p>
+<p>哈希部分是键值对元素，只能通过点运算符直接访问。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 通过 #table ，可以获取表中的数组部分的长度。</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="o">#</span><span class="n">person</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 访问表的键值元素</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">person.numberValue</span><span class="p">)</span>  <span class="c1">-- 输出: 42</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 插入新元素</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- table.insert()方法，接收3个参数，表、索引和值，用于给表的数组部分插入值。索引不能大于 数组部分的长度+1，如果省略索引，则在数组部分的末尾插入。</span>
+</span></span><span class="line"><span class="cl"><span class="n">table.insert</span><span class="p">(</span><span class="s2">&#34;key&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&#34;six&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 通过点运算符赋值的方式，插入键值对。</span>
+</span></span><span class="line"><span class="cl"><span class="n">person.gender</span> <span class="o">=</span> <span class="s2">&#34;male&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 遍历表</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- key, value in pairs() 获取表的所有键值对</span>
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="kr">in</span> <span class="n">pairs</span><span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 遍历表的数组部分</span>
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">person</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">person</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="表函数的定义">
+    <a href="#%e8%a1%a8%e5%87%bd%e6%95%b0%e7%9a%84%e5%ae%9a%e4%b9%89">#</a>
+    表函数的定义
+</h3><p>使用匿名函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">t</span><span class="o">=</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">--表外添加键值对</span>
+</span></span><span class="line"><span class="cl"><span class="n">t.func</span><span class="o">=</span><span class="kr">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">--表内定义</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span><span class="o">=</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">func</span><span class="o">=</span><span class="kr">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">t</span><span class="o">=</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">t</span><span class="p">:</span><span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="元表与元方法">
+    <a href="#%e5%85%83%e8%a1%a8%e4%b8%8e%e5%85%83%e6%96%b9%e6%b3%95">#</a>
+    元表与元方法
+</h3><p>拥有元方法的表称为元表，原方法是一些拥有特定名称的函数。</p>
+<p>元表允许改变表的行为，每个表都可以有一个元表，元表的元方法用于定义表的一些特定操作，如算术运算、索引、调用等。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 定义一个表</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">t</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 定义一个元表</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">mt</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- __add是特定的元方法，用于定义两个表相加时，执行的操作。</span>
+</span></span><span class="line"><span class="cl">    <span class="n">__add</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">t2</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">            <span class="n">table.insert</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">end</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">return</span> <span class="n">t1</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- setmetatable函数，给表绑定元表</span>
+</span></span><span class="line"><span class="cl"><span class="n">setmetatable</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">mt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 使用元方法</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">t2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">t3</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">t2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span> <span class="kr">in</span> <span class="n">ipairs</span><span class="p">(</span><span class="n">t3</span><span class="p">)</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1">-- 输出: 1 2 3 4 5 6</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>元方法及其作用如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">__index</span><span class="p">:</span><span class="err">定义访问表中不存在的键时的行为。定义类时，通常使其等于类名（表名），否则无法通过对象名称访问成员方法。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__newindex</span><span class="p">:</span><span class="err">定义给表中不存在的键赋值时的行为。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__call</span><span class="p">:</span><span class="err">定义表作为函数调用时的行为。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">__tostring</span><span class="p">:</span><span class="err">定义表转换成字符串时的值。</span>
+</span></span><span class="line"><span class="cl"><span class="n">__len</span><span class="p">:</span><span class="err">定义对表使用操作符“</span><span class="o">#</span><span class="err">”时的行为。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 算术运算</span>
+</span></span><span class="line"><span class="cl"><span class="n">__add</span><span class="p">:</span><span class="err">表相加</span>
+</span></span><span class="line"><span class="cl"><span class="n">__sub</span><span class="p">:</span><span class="err">表相减</span>
+</span></span><span class="line"><span class="cl"><span class="n">__mul</span><span class="p">:</span><span class="err">表相乘</span>
+</span></span><span class="line"><span class="cl"><span class="n">__div</span><span class="p">:</span><span class="err">表相除</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 逻辑判断(没有判断大于和大于等于的元方法)</span>
+</span></span><span class="line"><span class="cl"><span class="n">__eq</span><span class="p">:</span><span class="o">==</span>
+</span></span><span class="line"><span class="cl"><span class="n">__lt</span><span class="p">:</span><span class="o">&lt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">__le</span><span class="p">:</span><span class="o">&lt;=</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="面向对象编程">
+    <a href="#%e9%9d%a2%e5%90%91%e5%af%b9%e8%b1%a1%e7%bc%96%e7%a8%8b">#</a>
+    面向对象编程
+</h2><p>Lua 通过表和元表来实现面向对象编程。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 定义一个类</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">Animal</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="n">Animal.__index</span> <span class="o">=</span> <span class="n">Animal</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 构造函数一般命名为new</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">Animal</span><span class="p">:</span><span class="nf">new</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 一般先用setmetatable函数，给一个空表绑定元表，然后返回该空表，</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 并在其基础上设置表元素。</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">setmetatable</span><span class="p">({},</span> <span class="n">Animal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">instance.name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">instance</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 类的成员方法</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">Animal</span><span class="p">:</span><span class="nf">speak</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;My name is &#34;</span> <span class="o">..</span> <span class="n">self.name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 创建实例</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">dog</span> <span class="o">=</span> <span class="n">Animal</span><span class="p">:</span><span class="n">new</span><span class="p">(</span><span class="s2">&#34;Buddy&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dog</span><span class="p">:</span><span class="n">speak</span><span class="p">()</span>  <span class="c1">-- 输出: My name is Buddy</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>值得注意的是，new方法返回的对象仅仅是包含表中变量的一个新表，而类的成员方法定义在元表中，所以无法直接通过该对象访问元表中定义的成员方法。</p>
+<p>但由于对象与元表绑定，并且元表中定义了元方法 __index 为元表的名称，所以当通过该对象访问未定义的函数时，就会触发元方法，把调用对象替换成元表，从而实现通过对象调用类的成员方法。</p>
+<h2 id="字符串操作">
+    <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e6%93%8d%e4%bd%9c">#</a>
+    字符串操作
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;Hello, World&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="o">#</span><span class="n">s</span><span class="p">)</span>  <span class="c1">-- #输出字符串长度</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">string.upper</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>  <span class="c1">-- 转换为大写</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">string.lower</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>  <span class="c1">-- 转换为小写</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="require函数">
+    <a href="#require%e5%87%bd%e6%95%b0">#</a>
+    require函数
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s2">&#34;moduleName&#34;</span><span class="p">)</span> <span class="c1">--注意模块名称为文件名省略.lua后缀。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>require 函数用于加载并运行一个模块。如果模块之前已经加载过，require 会返回该模块的缓存结果，而不会重复加载。<strong>这意味着在同时引入该文件中的全局变量和函数</strong>。</p>
+<p>这个机制确保了模块在 Lua 脚本中只会被加载一次，避免了重复加载带来的性能问题和潜在的副作用。</p>
+<h2 id="模块">
+    <a href="#%e6%a8%a1%e5%9d%97">#</a>
+    模块
+</h2><p>模块用于将功能相关的代码封装在一个独立的命名空间中，从而避免命名冲突，模块也是使lua脚本之间进行数据传递和代码引用的重要机制，模块可以返回任意数据类型。</p>
+<p>定义模块时，使用点运算符创建该命名空间独有的变量，并且在lua文件中通过return语句返回模块。
+每个lua脚本只能调用一次return语句（返回一个模块）</p>
+<p>模块通常是局部变量，因为如果是全局变量，就不必在当前文件return，也不必在其他文件require，其它文件可以直接使用全局变量（前提是这些文件建立了联系）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 定义模块(mymodule.lua)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">M</span> <span class="o">=</span> <span class="p">{}</span> 
+</span></span><span class="line"><span class="cl"><span class="n">M.value</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">--通过点运算符，在表M的命名空间中定义了变量value</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">M</span><span class="p">.</span><span class="nf">increment</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">M.value</span> <span class="o">=</span> <span class="n">M.value</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 返回模块</span>
+</span></span><span class="line"><span class="cl"><span class="kr">return</span> <span class="n">M</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用模块时，需要在当前lua脚本中，调用require函数并传入模块所在的文件名（不包含.lua后缀）。require函数返回模块。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- 使用模块(main.lua)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">mymodule</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&#34;mymodule&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">mymodule.increment</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">mymodule.value</span><span class="p">)</span>  <span class="c1">-- 输出: 1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="函数的覆盖与保留">
+    <a href="#%e5%87%bd%e6%95%b0%e7%9a%84%e8%a6%86%e7%9b%96%e4%b8%8e%e4%bf%9d%e7%95%99">#</a>
+    函数的覆盖与保留
+</h2><p>有时候需要重写全局函数，同时能够调用原函数。可以先使用变量存储原函数，再重写原函数以覆盖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- ISToolTipInv.render是来自其他文件的表函数</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">original_render</span> <span class="o">=</span> <span class="n">ISToolTipInv.render</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">ISToolTipInv</span><span class="p">:</span><span class="nf">render</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 可以根据条件判断，调用原函数，还是重写后的函数。</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">if</span> <span class="ow">not</span> <span class="n">CONDITION</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">        <span class="n">original_render</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- ... some custom code ...</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">ISToolTipInv</span><span class="p">:</span><span class="nf">render</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 先执行原函数，再执行新的步骤</span>
+</span></span><span class="line"><span class="cl">    <span class="n">original_render</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 新的代码：</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="作用域-全局与局部">
+    <a href="#%e4%bd%9c%e7%94%a8%e5%9f%9f-%e5%85%a8%e5%b1%80%e4%b8%8e%e5%b1%80%e9%83%a8">#</a>
+    作用域 全局与局部
+</h2><p>全局变量和函数可以从任何文件、代码中的任何位置访问。</p>
+<p>局部变量只能从声明它们的文件或代码块访问。</p>
+<p>与函数不同，在表中定义的变量或函数等，作用域与表一致。</p>
+<p>虽然全局作用域是一个方便的功能，但它往往更成问题。访问全局变量速度较慢，而且存在被意外覆盖的风险。Lua 的核心理念之一是在尽可能最小的范围（本地）内声明变量和函数。</p>
+<h3 id="特殊规则">
+    <a href="#%e7%89%b9%e6%ae%8a%e8%a7%84%e5%88%99">#</a>
+    特殊规则
+</h3><p>声明变量时，只要没有使用local关键字，就一定是全局变量。</p>
+<p>声明函数时如果没有使用local关键字，一般是全局函数，除非该函数被封装在局部变量或局部表中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">func</span><span class="o">=</span><span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;函数被封装在局部变量中，因此函数是局部函数。&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">tb</span><span class="o">=</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">tb</span><span class="p">:</span><span class="nf">func</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;函数被封装在局部表中，因此函数是局部函数。&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这符合访问权限的控制规则和一致性。</p>
+<h3 id="跨文件访问全局变量">
+    <a href="#%e8%b7%a8%e6%96%87%e4%bb%b6%e8%ae%bf%e9%97%ae%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f">#</a>
+    跨文件访问全局变量
+</h3><p>只需要在当前文件中引入目标文件，就可以直接访问目标文件中定义的全局变量（包含模块）。</p>
+<h3 id="跨文件访问局部变量">
+    <a href="#%e8%b7%a8%e6%96%87%e4%bb%b6%e8%ae%bf%e9%97%ae%e5%b1%80%e9%83%a8%e5%8f%98%e9%87%8f">#</a>
+    跨文件访问局部变量
+</h3><p>局部变量的作用域是其所在的文件或代码块，因此无法直接跨文件访问，只能通过lua的模块机制或全局函数实现这一点。</p>
+<p>通过全局函数访问：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- file1.lua</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">localVar</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nf">getLocalVar</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">localVar</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- file2.lua</span>
+</span></span><span class="line"><span class="cl"><span class="n">require</span> <span class="p">(</span><span class="s2">&#34;file1&#34;</span><span class="p">)</span> <span class="c1">-- 引入file1.lua中的全局函数</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">getLocalVar</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过模块访问：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- file1.lua</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">M</span><span class="o">=</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">M.localVar</span><span class="o">=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- 模块内定义一个get函数，隐藏内部细节，实现数据封装</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">M</span><span class="p">.</span><span class="nf">getLocalVar</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">M.localVar</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">return</span> <span class="n">M</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- file2.lua</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">M</span><span class="o">=</span><span class="n">require</span><span class="p">(</span><span class="s2">&#34;file1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">M.getLocalVar</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">return</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>虽然使用get和set方法有很多好处，但并非总是需要使用get和set方法访问模块或表内字段，尤其是需要频繁访问这些字段时，相比于直接访问字段，使用中间方法会降低性能。</p>
+<h2 id="性能优化">
+    <a href="#%e6%80%a7%e8%83%bd%e4%bc%98%e5%8c%96">#</a>
+    性能优化
+</h2><blockquote>
+<p>代码块运行得越频繁，就越需要对其进行优化。</p>
+</blockquote>
+<h3 id="作用域">
+    <a href="#%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
+    作用域
+</h3><ol>
+<li>
+<p>尽可能使用local关键字声明变量和函数</p>
+</li>
+<li>
+<p>函数内部始终使用局部变量，如果函数外需要使用该局部变量，就现在函数外将其声明为局部变量。</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Fun</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="s2">&#34;something else&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>
+<p>把文件中所有的全局作用域函数和变量，放入一个全局表中，避免全局命名空间的污染，便于使用和管理。</p>
+</li>
+<li>
+<p>把需要使用的全局表和函数存到局部变量中。Lua的最小作用域理念不仅适用于声明变量和函数，还适用于访问它们。通过将全局变量拉入本地空间，可以提高性能。</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">MyTable</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">MyTable</span><span class="p">.</span><span class="nf">Fun</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">num</span> <span class="kr">in</span> <span class="n">ipairs</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- 每次循环都要调用全局函数print和ZombRand</span>
+</span></span><span class="line"><span class="cl">        <span class="n">print</span><span class="p">(</span><span class="n">ZombRand</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>把全局变量引入到本地后：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">MyTable</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">MyTable</span><span class="p">.</span><span class="nf">Fun</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">print</span> <span class="o">=</span> <span class="n">print</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">ZombRand</span> <span class="o">=</span> <span class="n">ZombRand</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">num</span> <span class="kr">in</span> <span class="n">ipairs</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">print</span><span class="p">(</span><span class="n">ZombRand</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更极端的做法是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">MyTable</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">print</span> <span class="o">=</span> <span class="n">print</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">ZombRand</span> <span class="o">=</span> <span class="n">ZombRand</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">ipairs</span> <span class="o">=</span> <span class="n">ipairs</span> <span class="c1">-- 此时完全不需要在全局空间中查找</span>
+</span></span><span class="line"><span class="cl"><span class="kr">function</span> <span class="nc">MyTable</span><span class="p">.</span><span class="nf">Fun</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">num</span> <span class="kr">in</span> <span class="n">ipairs</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">print</span><span class="p">(</span><span class="n">ZombRand</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为了控制本地命名空间的污染，可以使用 do end 代码块，进一步改进：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">MyTable</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">ipairs</span> <span class="o">=</span> <span class="n">ipairs</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">print</span> <span class="o">=</span> <span class="n">print</span>
+</span></span><span class="line"><span class="cl"><span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- 将非系统全局变量放入代码块中，避免本地命名空间污染</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">ZombRand</span> <span class="o">=</span> <span class="n">ZombRand</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span> <span class="nc">MyTable</span><span class="p">.</span><span class="nf">Fun</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">num</span> <span class="kr">in</span> <span class="n">ipairs</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">print</span><span class="p">(</span><span class="n">ZombRand</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">end</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="复合条件的顺序">
+    <a href="#%e5%a4%8d%e5%90%88%e6%9d%a1%e4%bb%b6%e7%9a%84%e9%a1%ba%e5%ba%8f">#</a>
+    复合条件的顺序
+</h3><p>考虑以下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kr">if</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">y</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- do something</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于and和or逻辑判断是短路的，所以复合条件的顺序一定程度上能够控制逻辑判断次数。</p>
+<p>如果实现知道条件的真假概率，显而易见：</p>
+<blockquote>
+<p>对于and逻辑，应该把结果为false的可能性较大的条件放在前面。<br>
+对于or逻辑，应该把结果为true的可能性较大的条件放在前面。</p>
+</blockquote>
+<h3 id="避免重复调用">
+    <a href="#%e9%81%bf%e5%85%8d%e9%87%8d%e5%a4%8d%e8%b0%83%e7%94%a8">#</a>
+    避免重复调用
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kr">if</span> <span class="n">getPlayer</span><span class="p">():</span><span class="n">getInventory</span><span class="p">():</span><span class="n">contains</span><span class="p">(</span><span class="s2">&#34;MyMod.MyItem&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">getPlayer</span><span class="p">():</span><span class="n">getInventory</span><span class="p">():</span><span class="n">contains</span><span class="p">(</span><span class="s2">&#34;MyMod.MyItem&#34;</span><span class="p">)</span> <span class="kr">then</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果要多次使用同一个函数的返回值，确定其不变的情况下，将结果缓存在局部变量中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">inventory</span> <span class="o">=</span> <span class="n">getPlayer</span><span class="p">():</span><span class="n">getInventory</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="n">inventory</span><span class="p">:</span><span class="n">contains</span><span class="p">(</span><span class="s2">&#34;MyMod.MyItem&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">inventory</span><span class="p">:</span><span class="n">contains</span><span class="p">(</span><span class="s2">&#34;MyMod.MyItem&#34;</span><span class="p">)</span> <span class="kr">then</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考资料">
+    <a href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99">#</a>
+    参考资料
+</h2><p><a class="link" href="https://github.com/FWolfe/Zomboid-Modding-Guide/blob/master/api/README.md"  target="_blank" rel="noopener"
+    >https://github.com/FWolfe/Zomboid-Modding-Guide/blob/master/api/README.md</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+        
+            <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "CHmadoka" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 CHmadoka 小屋
+    </section>
+    
+    <section class="powerby">
+        
+            Special Thanks to Yukari Chan <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="清晰的web发展脉络">
+<title>Web技术简史</title>
+
+<link rel='canonical' href='https://CHmadoka.github.io/p/web%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8F%B2/'>
+
+<link rel="stylesheet" href="/scss/style.min.8e60baf4cd3fc55968717a6e39762f4d28ed7ef6007566b6c7970ad0fe907198.css"><meta property='og:title' content="Web技术简史">
+<meta property='og:description' content="清晰的web发展脉络">
+<meta property='og:url' content='https://CHmadoka.github.io/p/web%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8F%B2/'>
+<meta property='og:site_name' content='CHmadoka 小屋'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Web' /><meta property='article:tag' content='Servlet' /><meta property='article:tag' content='JSP' /><meta property='article:tag' content='前后端分离' /><meta property='article:tag' content='MVC' /><meta property='article:tag' content='Ajax' /><meta property='article:published_time' content='2024-12-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-12-01T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Web技术简史">
+<meta name="twitter:description" content="清晰的web发展脉络">
+    <link rel="shortcut icon" href="/titleImg.png" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/file_259987_hu712dd812b62879d39640ef77b16ac818_50548_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😽</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">CHmadoka 小屋</a></h1>
+            <h2 class="site-description">呆头呆脑的大聪明。在此分享一些比较个人化的内容。</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CHmadoka'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>垃圾堆</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#11991年定义了http-协议html-和-url">1.	1991年，定义了HTTP 协议、HTML 和 URL</a></li>
+    <li><a href="#21997年sun发布了java-ee企业版其中的servlet成了web技术至今为止最核心的内容之一">2.	1997年，Sun发布了Java EE（企业版），其中的Servlet成了web技术至今为止最核心的内容之一。</a></li>
+    <li><a href="#3静态htmlservlet1999">3.	静态HTML+Servlet（1999）</a></li>
+    <li><a href="#4servlet-jsp00年代初">4.	Servlet-JSP（00年代初）</a></li>
+    <li><a href="#5mvc模式00年代中期">5.	MVC模式（00年代中期）</a></li>
+    <li><a href="#6ajax前后端分离的萌芽与js的兴起2005">6.	Ajax：前后端分离的萌芽与JS的兴起（2005）</a></li>
+    <li><a href="#7前后端分离的兴起与单页应用spa10年代初">7.	前后端分离的兴起与单页应用SPA（10年代初）</a></li>
+    <li><a href="#8前端框架的流行10年代初">8.	前端框架的流行（10年代初）</a></li>
+    <li><a href="#9微服务架构10年代末">9.	微服务架构（10年代末）</a></li>
+    <li><a href="#10服务器端渲染与静态站点生成器的流行20年代初">10.	服务器端渲染与静态站点生成器的流行（20年代初）</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" >
+                Web
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/web%E6%8A%80%E6%9C%AF%E7%AE%80%E5%8F%B2/">Web技术简史</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            清晰的web发展脉络
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 01, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>Web技术简史：</p>
+<h2 id="11991年定义了http-协议html-和-url">
+    <a href="#11991%e5%b9%b4%e5%ae%9a%e4%b9%89%e4%ba%86http-%e5%8d%8f%e8%ae%aehtml-%e5%92%8c-url">#</a>
+    1.	1991年，定义了HTTP 协议、HTML 和 URL
+</h2><h2 id="21997年sun发布了java-ee企业版其中的servlet成了web技术至今为止最核心的内容之一">
+    <a href="#21997%e5%b9%b4sun%e5%8f%91%e5%b8%83%e4%ba%86java-ee%e4%bc%81%e4%b8%9a%e7%89%88%e5%85%b6%e4%b8%ad%e7%9a%84servlet%e6%88%90%e4%ba%86web%e6%8a%80%e6%9c%af%e8%87%b3%e4%bb%8a%e4%b8%ba%e6%ad%a2%e6%9c%80%e6%a0%b8%e5%bf%83%e7%9a%84%e5%86%85%e5%ae%b9%e4%b9%8b%e4%b8%80">#</a>
+    2.	1997年，Sun发布了Java EE（企业版），其中的Servlet成了web技术至今为止最核心的内容之一。
+</h2><h2 id="3静态htmlservlet1999">
+    <a href="#3%e9%9d%99%e6%80%81htmlservlet1999">#</a>
+    3.	静态HTML+Servlet（1999）
+</h2><p>Servlet成为web开发的主流，此时HTML发起请求，Servlet接收请求并完成所有操作的处理，包括请求与响应的处理，数据库相关的所有操作，以及直接生成并输出html页面。</p>
+<p>不仅是前后端杂糅，后端中的视图（View）、业务（Model）、控制（Controller）也是高度耦合的。需要手动拼接大量的HTML代码，结构混乱并且维护难度大。</p>
+<h2 id="4servlet-jsp00年代初">
+    <a href="#4servlet-jsp00%e5%b9%b4%e4%bb%a3%e5%88%9d">#</a>
+    4.	Servlet-JSP（00年代初）
+</h2><p>为了简化HTML的动态生成，引入了JSP模板引擎技术。由于很多页面中通常包含大量的静态内容，只有少部分需要根据数据更新，JSP就是在静态HTML代码的基础上，加入了Java代码控制HTML的部分。</p>
+<p>早期阶段，Servlet直接把请求转发到对应的JSP页面，其他的所有前后端操作全部在JSP中通过Java代码实现。</p>
+<p>后来JSP引入了EL表达式和JSTL标签库，理论上可以实现业务逻辑与视图逻辑的彻底分离，将业务逻辑和数据库操作全部放在Servlet中，JSP只从Servlet获取数据而放弃所有Java代码；但由于JSP并没有将两种逻辑分离的初衷和理念，开发者因为旧习惯和没有分层架构意识，往往还是在JSP中大量进行数据库操作和业务逻辑的处理。因此JSP中java代码与HTML代码的耦合始终存在。</p>
+<h2 id="5mvc模式00年代中期">
+    <a href="#5mvc%e6%a8%a1%e5%bc%8f00%e5%b9%b4%e4%bb%a3%e4%b8%ad%e6%9c%9f">#</a>
+    5.	MVC模式（00年代中期）
+</h2><p>随着Servlet-JSP技术开发的日益复杂，为了将业务逻辑与视图逻辑彻底分离，提出并引入了MVC模式：</p>
+<pre><code>	Model（模型）：包含业务逻辑（Service层）与数据处理（DAO层），其中业务逻辑通常都包含对数据的获取和更新，所以Service层通常需要调用DAO层。
+	View（视图）：控制页面的显示（HTML、模板引擎或者前端框架）。
+	Controller（控制）：接受请求，调用业务逻辑（Service层）。
+</code></pre>
+<p>其中，Servlet对应Controller层，负责接受请求，并且转发到对应的Service层接口。
+Service层处理业务逻辑，通常需要调用DAO层获取和更新数据。
+Servlet调用Service返回数据后，将数据与请求一起转发到对应的JSP。
+JSP获取数据，通过EL表达式和JSTL标签库将其渲染到HMTL中，彻底抛弃了Java代码。</p>
+<p>从技术上来说，JSP引入EL表达式和JSTL标签库之后，就已经能够实现业务逻辑和视图逻辑的分离了。但是MVC模式从概念和思想上让人们广泛认识到这种分离的必要性，具有里程碑式的意义。</p>
+<h2 id="6ajax前后端分离的萌芽与js的兴起2005">
+    <a href="#6ajax%e5%89%8d%e5%90%8e%e7%ab%af%e5%88%86%e7%a6%bb%e7%9a%84%e8%90%8c%e8%8a%bd%e4%b8%8ejs%e7%9a%84%e5%85%b4%e8%b5%b72005">#</a>
+    6.	Ajax：前后端分离的萌芽与JS的兴起（2005）
+</h2><p>随着web应用交互性需要的日益提升，传统的请求-页面刷新模式逐渐无法满足性能上的需要。为了不需要重新加载整个页面就能够更新部分内容，通过后台发送异步请求动态更新页面的Ajax技术诞生了。前端通过XMLHttpRequest对象发起请求，后端将数据作为JSON字符串返回。</p>
+<p>初期，网站只在局部强交互的场景下使用Ajax技术，页面的跳转仍然使用传统的页面刷新模式，通过模板引擎生成新的页面，也就是说前后端仍然是耦合的。</p>
+<p>随着Ajax的普及和广泛使用，前后端分离逐渐成为一种必然的趋势。
+Ajax和动态渲染的流行背后，是JavaScript的兴起（XHR、逻辑控制与DOM操作）。</p>
+<h2 id="7前后端分离的兴起与单页应用spa10年代初">
+    <a href="#7%e5%89%8d%e5%90%8e%e7%ab%af%e5%88%86%e7%a6%bb%e7%9a%84%e5%85%b4%e8%b5%b7%e4%b8%8e%e5%8d%95%e9%a1%b5%e5%ba%94%e7%94%a8spa10%e5%b9%b4%e4%bb%a3%e5%88%9d">#</a>
+    7.	前后端分离的兴起与单页应用SPA（10年代初）
+</h2><p>随着互联网技术的不断发展，对流畅性和性能的需求也不断提升，前后端分离架构逐渐成为主流，后端专注于提供数据接口API，前端通过Ajax或类似的Fetch技术，向后端API请求获取数据，然后动态渲染页面。</p>
+<p>此时前端就是一个单页应用（Single Page Application，SPA），通过前端框架（React、Vue等）实现前端路由，当用户点击链接或执行某个操作时，前端路由会拦截这些操作，并通过JavaScript来发送请求和更新页面视图，所有的更新都在旧页面的基础上动态渲染，无需刷新整个页面。</p>
+<p>SPA只有在初次访问页面时，需要加载整个页面，所以后端仍然需要留出接口返回基础的HTML页面，这个页面通常包含静态资源链接（如通过URL引入了CSS、JS和图片等资源），因此加载这个HTML页面时，将隐式地再次向后端请求静态资源（后端通常将静态资源放在static目录中，这些资源可以直接访问和下载，无需经过Controller的处理）。</p>
+<p>然而页面刷新模式（或者说多页应用MPA）仍然有其存在的必要性，例如网站中差异较大的不同板块切换时，如登录界面、首页、个人中心等等，如果强行使用JS动态渲染，则性能低下、编写复杂、维护难度大，因此差异较大的页面通常依赖不同的基础HTML文件，在这些页面之间切换时，仍然要向后端请求HTML页面，也就是用到了页面刷新模式（或者MPA）。</p>
+<h2 id="8前端框架的流行10年代初">
+    <a href="#8%e5%89%8d%e7%ab%af%e6%a1%86%e6%9e%b6%e7%9a%84%e6%b5%81%e8%a1%8c10%e5%b9%b4%e4%bb%a3%e5%88%9d">#</a>
+    8.	前端框架的流行（10年代初）
+</h2><p>随着前后端分离成为主流，前端框架也得到了快速发展，React、Angular、Vue等现代JavaScript框架成为Web开发的重要工具。</p>
+<p>与此同时，后端更加注重API的设计，Restful风格开始流行起来。</p>
+<h2 id="9微服务架构10年代末">
+    <a href="#9%e5%be%ae%e6%9c%8d%e5%8a%a1%e6%9e%b6%e6%9e%8410%e5%b9%b4%e4%bb%a3%e6%9c%ab">#</a>
+    9.	微服务架构（10年代末）
+</h2><p>随着Web应用的复杂性不断增加，单一的Web应用逐渐无法满足规模化需求。微服务架构（Microservices Architecture）作为一种解决方案，逐渐成为大型Web应用的首选架构模式。微服务架构通过将一个大的应用拆分成多个小的服务，每个服务独立部署、独立开发和独立维护，提高了系统的灵活性和扩展性。</p>
+<p>微服务架构通常配合容器化技术（如Docker）和容器编排（如Kubernetes）进行部署，使得应用能够在云环境中高效运行。微服务架构也使得前后端分离的模式更加得以发挥，前端与各个微服务通过RESTful API进行交互，整个系统可以高效地在不同服务间分工合作。</p>
+<h2 id="10服务器端渲染与静态站点生成器的流行20年代初">
+    <a href="#10%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%af%e6%b8%b2%e6%9f%93%e4%b8%8e%e9%9d%99%e6%80%81%e7%ab%99%e7%82%b9%e7%94%9f%e6%88%90%e5%99%a8%e7%9a%84%e6%b5%81%e8%a1%8c20%e5%b9%b4%e4%bb%a3%e5%88%9d">#</a>
+    10.	服务器端渲染与静态站点生成器的流行（20年代初）
+</h2><p>尽管前后端分离和单页应用（SPA）在提升用户体验方面有显著优势，但它们也存在SEO（搜索引擎优化）、首次加载性能等问题。为了更好地解决这些问题，服务器端渲染（SSR，Server-Side Rendering）和静态站点生成（SSG，Static Site Generation）逐渐成为Web开发的热门趋势。</p>
+<p>Next.js、Nuxt.js等框架支持服务器端渲染和静态站点生成，它们在开发时采用类似SPA的模式，而在生产环境中进行预渲染，提供快速加载和更好的SEO支持。</p>
+<p>随着静态网站生成技术的崛起，很多内容驱动的应用（如博客、企业网站等）开始广泛使用静态站点生成器（如Hugo），生成预渲染的HTML文件，进一步提高性能和可维护性。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/web/">Web</a>
+        
+            <a href="/tags/servlet/">Servlet</a>
+        
+            <a href="/tags/jsp/">JSP</a>
+        
+            <a href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/">前后端分离</a>
+        
+            <a href="/tags/mvc/">MVC</a>
+        
+            <a href="/tags/ajax/">Ajax</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "CHmadoka" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 CHmadoka 小屋
+    </section>
+    
+    <section class="powerby">
+        
+            Special Thanks to Yukari Chan <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

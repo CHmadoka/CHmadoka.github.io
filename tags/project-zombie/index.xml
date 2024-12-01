@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Project Zombie on CHmadoka 小屋</title>
+        <link>https://CHmadoka.github.io/tags/project-zombie/</link>
+        <description>Recent content in Project Zombie on CHmadoka 小屋</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 28 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://CHmadoka.github.io/tags/project-zombie/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Project Zombie源码分析</title>
+        <link>https://CHmadoka.github.io/p/project-zombie%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
+        <pubDate>Tue, 28 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://CHmadoka.github.io/p/project-zombie%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
+        <description>&lt;p&gt;&lt;strong&gt;使用游戏版本：41.78.16&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;游戏目录文件结构&#34;&gt;
+    &lt;a href=&#34;#%e6%b8%b8%e6%88%8f%e7%9b%ae%e5%bd%95%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84&#34;&gt;#&lt;/a&gt;
+    游戏目录文件结构
+&lt;/h2&gt;&lt;p&gt;ProjectZomboid/ &lt;br&gt;
+├── media/ &lt;br&gt;
+│   ├── actiongroups/ &lt;br&gt;
+│   │   └── (包含描述动画过渡的 .xml 脚本) &lt;br&gt;
+│   ├── anims_X/ &lt;br&gt;
+│   │   └── (包含动画文件) &lt;br&gt;
+│   ├── AnimSets/ &lt;br&gt;
+│   │   └── (包含描述动画参数的 .xml 脚本) &lt;br&gt;
+│   ├── lua/ &lt;br&gt;
+│   │   └── (包含游戏的所有 Lua 代码) &lt;br&gt;
+│   ├── maps/ &lt;br&gt;
+│   │   └── (包含地图文件) &lt;br&gt;
+│   ├── models_X/ &lt;br&gt;
+│   │   └── (包含物品、武器和衣服的 3D 模型) &lt;br&gt;
+│   ├── radio/ &lt;br&gt;
+│   │   └── (包含描述电台操作的脚本) &lt;br&gt;
+│   ├── scripts/ &lt;br&gt;
+│   │   └── (包含描述物品、武器、车辆参数的脚本) &lt;br&gt;
+│   ├── sound/ &lt;br&gt;
+│   │   └── (包含游戏的音频文件) &lt;br&gt;
+│   ├── texturepacks/ &lt;br&gt;
+│   │   └── (包含打包的游戏纹理和图像) &lt;br&gt;
+│   ├── textures/ &lt;br&gt;
+│   │   └── (包含游戏未打包的纹理) &lt;br&gt;
+│   └── ui/ &lt;br&gt;
+│       └── (包含游戏的图标和图像) &lt;br&gt;
+└── zombie/ &lt;br&gt;
+    └── (包含游戏的编译 Java 代码)&lt;/p&gt;
+&lt;h2 id=&#34;用户目录文件结构&#34;&gt;
+    &lt;a href=&#34;#%e7%94%a8%e6%88%b7%e7%9b%ae%e5%bd%95%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84&#34;&gt;#&lt;/a&gt;
+    用户目录文件结构
+&lt;/h2&gt;&lt;p&gt;在Windows系统中，用户目录的路径通常为：&lt;code&gt;C:/Users/username/Zomboid&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Zomboid/（游戏根目录）&lt;br&gt;
+├── console.txt（控制台日志文件）&lt;br&gt;
+├── coop-console.txt（本地主机服务器日志文件）&lt;br&gt;
+├── server-console.txt（专用服务器日志文件）&lt;br&gt;
+├── Lua/（Lua脚本文件夹）&lt;br&gt;
+├── mods/（本地存储的mod文件夹）&lt;br&gt;
+├── Workshop/（Steam创意工坊文件夹）&lt;br&gt;
+└── Saves/（游戏存档文件夹）&lt;/p&gt;
+&lt;h2 id=&#34;模组文件结构&#34;&gt;
+    &lt;a href=&#34;#%e6%a8%a1%e7%bb%84%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84&#34;&gt;#&lt;/a&gt;
+    模组文件结构
+&lt;/h2&gt;&lt;p&gt;mod根目录/&lt;br&gt;
+├── mod.info （包含mod及相关内容的描述）&lt;br&gt;
+├── image.png （mod的封面图片，供mod.info引用）&lt;br&gt;
+└── media/&lt;br&gt;
+    ├── models_X/&lt;br&gt;
+    │   └── (3D 模型文件：.x, .fbx)&lt;br&gt;
+    ├── scripts/&lt;br&gt;
+    │   └── (脚本文件：物品、车辆、配方、衣服)&lt;br&gt;
+    ├── textures/&lt;br&gt;
+    │   └── (纹理图像文件：物品、衣服、车辆)&lt;br&gt;
+    ├── ui/&lt;br&gt;
+    │   └── (图标、界面图像文件)&lt;br&gt;
+    ├── texturepacks/&lt;br&gt;
+    │   └── (纹理包文件)&lt;br&gt;
+    ├── lua/&lt;br&gt;
+    │   ├── shared/&lt;br&gt;
+    │   │   └── (服务器端和客户端共用的 Lua 文件)&lt;br&gt;
+    │   ├── client/&lt;br&gt;
+    │   │   └── (仅在客户端执行的 Lua 文件)&lt;br&gt;
+    │   └── server/&lt;br&gt;
+    │       └── (仅在服务器端执行的 Lua 文件)&lt;br&gt;
+    ├── sound/&lt;br&gt;
+    │   └── (音频文件)&lt;br&gt;
+    ├── maps/&lt;br&gt;
+    │   └── (地图文件)&lt;br&gt;
+    ├── animSets/&lt;br&gt;
+    │   └── (描述动画参数的 XML 脚本)&lt;br&gt;
+    └── anims_X/&lt;br&gt;
+        └── (动画文件：.x, .fbx)\&lt;/p&gt;
+&lt;h2 id=&#34;游戏代码结构&#34;&gt;
+    &lt;a href=&#34;#%e6%b8%b8%e6%88%8f%e4%bb%a3%e7%a0%81%e7%bb%93%e6%9e%84&#34;&gt;#&lt;/a&gt;
+    游戏代码结构
+&lt;/h2&gt;&lt;p&gt;PZ同时使用 Java 和 Lua。主要引擎和 API 功能使用 Java，大部分逻辑使用 Lua 脚本，便于在不需要编译的情况下进行修改。&lt;/p&gt;
+&lt;p&gt;为了将Lua嵌入到Java中，PZ使用了&lt;code&gt;se.krka.kahlua&lt;/code&gt; 库，这是一个纯Java编写的，轻量级Lua虚拟机，可以在java中解释执行Lua脚本，也可以在Lua中调用Java的类和方法。相比于&lt;code&gt;LuaJ&lt;/code&gt;库可以把Lua编译成Java字节码，&lt;code&gt;kahlua&lt;/code&gt;是解释执行Lua，性能相对较差。&lt;/p&gt;
+&lt;p&gt;Lua源代码位于 &lt;code&gt;ProjectZomboid/media/lua&lt;/code&gt; 中，是完全公开的，包含三个子文件夹，用于客户端的 &lt;code&gt;client&lt;/code&gt; 、用于服务器端的 &lt;code&gt;server&lt;/code&gt; 以及两端共用的 &lt;code&gt;shared&lt;/code&gt; ，&lt;strong&gt;有些lua文件包含一些开发者的注释&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;Java源代码位于 &lt;code&gt;ProjectZomboid/Zombie&lt;/code&gt; 中，因为是编译过的&lt;code&gt;.class&lt;/code&gt;文件，所以通过反编译才能阅读源代码。&lt;/p&gt;
+&lt;p&gt;Java源代码中的部分API已经通过Lua公开，具体方式是，在lua文件中先声明一个全局的空表，然后在这个表中定义与Java API同名的&lt;strong&gt;空函数&lt;/strong&gt;，&lt;strong&gt;公开的Java API都被写入了Lua文件的全局命名空间（表）中&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这意味着在&lt;code&gt;kahlua&lt;/code&gt;库的帮助下，在Lua中调用同名的Lua全局函数，实际上是间接调用Java中的类和方法，不需要任何额外操作，在任何lua文件中都可以调用，不同的是lua中使用冒号&lt;code&gt;:&lt;/code&gt;代替Java中的&lt;code&gt;.&lt;/code&gt;运算符访问成员变量和方法。&lt;/p&gt;
+&lt;p&gt;如果要了解这些函数做了什么，就不得不阅读反编译的Java代码。&lt;/p&gt;
+&lt;p&gt;因为lua中经常调用Java API，所以很可能返回一些Java对象，如&lt;code&gt;ArrayList&lt;/code&gt;等，在lua中也要通过Java的方法来访问，例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-lua&#34; data-lang=&#34;lua&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;arrayList&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;实际上，由于lua嵌入Java执行的需要，&lt;strong&gt;Java的很多原生方法在Lua中也是全局可用的&lt;/strong&gt;，但这是因为开发者把它们写进了Lua的全局命名空间以及&lt;code&gt;kahlua&lt;/code&gt;库的作用，而不是lua本身的特性。&lt;/p&gt;
+&lt;p&gt;虽然Java拥有很多方便好用的方法，需要注意的是，&lt;strong&gt;通过lua间接调用Java会有一定的性能损失&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;lua源代码解析&#34;&gt;
+    &lt;a href=&#34;#lua%e6%ba%90%e4%bb%a3%e7%a0%81%e8%a7%a3%e6%9e%90&#34;&gt;#&lt;/a&gt;
+    Lua源代码解析
+&lt;/h2&gt;&lt;h3 id=&#34;luashared&#34;&gt;
+    &lt;a href=&#34;#luashared&#34;&gt;#&lt;/a&gt;
+    lua/shared
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-lua&#34; data-lang=&#34;lua&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;VehicleZoneDistribution.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：更改或添加车辆生成逻辑&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;SpawnRegions.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：加载用户目录中的出生点文件“&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;servertest_spawnregions.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;”&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;luautils.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：定义了一系列实用的&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;lua工具函数&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，包括仿&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Java的字符串处理函数&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;，以及一些游戏内的与玩家、物品、方格、物品栏、耐久度等相关的操作函数。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;keyBinding.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：定义了游戏中键盘按键与功能的映射。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;ISBaseObject.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：定义了基本对象类，可创建对象，&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type属性默认为&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;“&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ISBaseObject&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;”，也可以传入一个字符串用于更改类型。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;defines.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：定义了一个全局表，包含很多物品掉落和玩家状态参数的键值对。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;BodyLocations.lua&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;：针对人物的各种服饰等，创建身体位置。各种衣物、包括绷带、伤口、甚至僵尸伤害都会占用身体位置，有些东西可以在其位置上存在多个（绷带、伤口、僵尸伤害）。还定义了一些衣物的互斥规则（不能同时穿戴）。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        
+    </channel>
+</rss>
